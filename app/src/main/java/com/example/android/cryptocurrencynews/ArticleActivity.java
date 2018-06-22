@@ -36,30 +36,16 @@
  *
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.example.android.cryptocurrencynews;
 
-buildscript {
-    
-    repositories {
-        google()
-        jcenter()
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class ArticleActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_article);
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.3'
-        
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }

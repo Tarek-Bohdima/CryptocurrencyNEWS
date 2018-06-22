@@ -36,30 +36,64 @@
  *
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.example.android.cryptocurrencynews;
 
-buildscript {
-    
-    repositories {
-        google()
-        jcenter()
+/**
+ * Created by Tarek on 21-Jun-18.
+ */
+public class Article {
+    private String mTitle;
+    private String mSection;
+    private String mAuthor;
+    private String mDate;
+    private String mUrl;
+
+/**
+ * Constructs a new {@link Article} object.
+ *
+ * @param title is the title of the article.
+ * @param section is the name of the section that the article belongs to.
+ * @param author is the writer of the article.
+ * @param date is the date of the publishing of the article.
+ * @param url is the url of the article.
+ */
+public Article(String title, String section, String author, String date, String url){
+
+    mTitle = title;
+    mSection = section;
+    mAuthor = author;
+    mDate = date;
+    mUrl = url;
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.3'
-        
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    public String getmTitle() {
+        return mTitle;
     }
-}
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
+    public String getmSection() {
+        return mSection;
     }
-}
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    public String getmAuthor() {
+        return mAuthor;
+    }
+
+    public String getmDate() {
+        return mDate;
+    }
+
+    public String getmUrl() {
+        return mUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "mTitle='" + mTitle + '\'' +
+                ", mSection='" + mSection + '\'' +
+                ", mAuthor='" + mAuthor + '\'' +
+                ", mDate='" + mDate + '\'' +
+                ", mUrl='" + mUrl + '\'' +
+                '}';
+    }
 }
