@@ -41,6 +41,7 @@ package com.example.android.cryptocurrencynews;
 /**
  * Created by Tarek on 21-Jun-18.
  */
+@SuppressWarnings("SpellCheckingInspection")
 public class Article {
     private String mTitle;
     private String mSection;
@@ -48,22 +49,22 @@ public class Article {
     private String mDate;
     private String mUrl;
 
-/**
- * Constructs a new {@link Article} object.
- *
- * @param title is the title of the article.
- * @param section is the name of the section that the article belongs to.
- * @param author is the writer of the article.
- * @param date is the date of the publishing of the article.
- * @param url is the url of the article.
- */
-public Article(String title, String section, String author, String date, String url){
+    /**
+     * Constructs a new {@link Article} object.
+     *
+     * @param title   is the title of the article.
+     * @param section is the name of the section that the article belongs to.
+     * @param author  is the writer of the article.
+     * @param date    is the date of the publishing of the article.
+     * @param url     is the url of the article.
+     */
+    public Article(String title, String section, String author, String date, String url) {
 
-    mTitle = title;
-    mSection = section;
-    mAuthor = author;
-    mDate = date;
-    mUrl = url;
+        mTitle = title;
+        mSection = section;
+        mAuthor = author;
+        mDate = date;
+        mUrl = url;
     }
 
     public String getmTitle() {
