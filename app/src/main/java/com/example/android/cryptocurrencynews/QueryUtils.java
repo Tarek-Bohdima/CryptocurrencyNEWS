@@ -210,22 +210,27 @@ public class QueryUtils {
             JSONArray articleArray = baseJsonResponse.getJSONArray("results");
 
             // For each article in the articleArray, create an {@link Article} object
-            for(int i = 0 ; i < articleArray.length() ; i++ ){
+            for(int i = 0 ; i < articleArray.length() ; i++ ) {
 
                 // Get a single article at position i within the list of articles
                 JSONObject currentArticle = articleArray.getJSONObject(i);
 
-               String title = currentArticle.getString("webTitle");
-               String section = currentArticle.getString("sectionName");
-               String date = currentArticle.getString("webPublicationDate");
-               String webUrl = currentArticle.getString("webUrl");
-               JSONArray tags = currentArticle.getJSONArray("tags");
-               JSONObject tagsObject = tags.getJSONObject(0);
-               String author = tagsObject.optString("webTitle", "Not Available");
+                String title = currentArticle.getString("webTitle");
+                String section = currentArticle.getString("sectionName");
+                String date = currentArticle.getString("webPublicationDate");
+                String webUrl = currentArticle.getString("webUrl");
+                JSONArray tagArray = currentArticle.getJSONArray("tags");
+                if (tagArray.length() >= 1) {
+                    for (int j = 0; j < tagArray.length(); j++) {
 
-               Article article = new Article(title, section, date, webUrl, author);
+                        JSONObject tagsObject = tagArray.getJSONObject(j);
+                        String author = tagsObject.getString("webTitle");
 
-               articles.add(article);
+                        Article article = new Article(title, section, author, date, webUrl);
+
+                        articles.add(article);
+                    }
+                }
             }
 
 
