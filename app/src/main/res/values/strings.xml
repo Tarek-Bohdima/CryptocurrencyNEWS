@@ -41,4 +41,5 @@
     <string name="long_placeholder">Long placeholder location that should wrap to more than 3 lines of text</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="no_articles_found">No Articles found</string>
+    <string name="author_attribution">By:</string>
 </resources>

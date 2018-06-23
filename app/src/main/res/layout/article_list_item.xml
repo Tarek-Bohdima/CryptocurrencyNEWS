@@ -2,40 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?android:listPreferredItemHeight"
+    android:layout_height="@dimen/list_item_height"
     android:orientation="vertical"
-    android:paddingEnd="16dp"
-    android:paddingLeft="16sp"
-    android:paddingRight="16dp"
-    android:paddingStart="16dp">
+    android:paddingEnd="@dimen/padding"
+    android:paddingLeft="@dimen/padding"
+    android:paddingRight="@dimen/padding"
+    android:paddingStart="@dimen/padding"
+    android:paddingTop="@dimen/padding">
 
     <TextView
         android:id="@+id/article_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
         android:fontFamily="sans-serif-medium"
-        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size"
         tools:text="@string/long_placeholder" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/margin">
 
         <TextView
             android:id="@+id/article_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
             android:fontFamily="sans-serif-medium"
-            android:textSize="12sp"
+            android:textColor="@color/details_text"
+            android:textSize="@dimen/details_text_size"
             tools:text="Tech NEWS" />
 
         <TextView
@@ -44,8 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:fontFamily="sans-serif-medium"
-            android:textSize="12sp"
-            tools:text="by: " />
+            android:textColor="@color/details_text"
+            android:textSize="@dimen/details_text_size"
+            android:text="@string/author_attribution"
+            tools:text="By: " />
 
 
         <TextView
@@ -53,10 +59,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
             android:fontFamily="sans-serif-medium"
-            android:textSize="12sp"
+            android:textColor="@color/details_text"
+            android:textSize="@dimen/details_text_size"
             tools:text="John Doe" />
 
         <TextView
@@ -66,8 +73,9 @@
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
+            android:textColor="@color/details_text"
             android:singleLine="true"
-            android:textSize="12sp"
+            android:textSize="@dimen/details_text_size"
             tools:text="2018-06-21" />
 
     </LinearLayout>

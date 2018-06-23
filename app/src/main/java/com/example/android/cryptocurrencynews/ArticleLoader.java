@@ -40,7 +40,6 @@ package com.example.android.cryptocurrencynews;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.nfc.Tag;
 import android.util.Log;
 
 import java.util.List;
@@ -50,17 +49,21 @@ import java.util.List;
  */
 public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
 
-    /** Tag for Log messages */
+    /**
+     * Tag for Log messages
+     */
     private static final String LOG_TAG = ArticleLoader.class.getSimpleName();
 
-    /** Query URL */
+    /**
+     * Query URL
+     */
     private String mUrl;
 
     /**
      * Constructs a new {@link ArticleLoader}.
      *
      * @param context of the activity
-     * @param url to load data from
+     * @param url     to load data from
      */
     public ArticleLoader(Context context, String url) {
         super(context);
@@ -83,11 +86,11 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
     public List<Article> loadInBackground() {
         Log.i(LOG_TAG, "TEST: loadInBackground() called ...");
 
-        if(mUrl == null){
+        if (mUrl == null) {
             return null;
         }
         // Perform the network request, parse the response, and extract a list of articles.
-        List<Article>articles = QueryUtils.fetchArticleData(mUrl);
+        List<Article> articles = QueryUtils.fetchArticleData(mUrl);
         return articles;
     }
 }

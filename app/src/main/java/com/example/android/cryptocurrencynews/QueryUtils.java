@@ -38,12 +38,11 @@
 
 package com.example.android.cryptocurrencynews;
 
-/**
- * Created by Tarek on 23-Jun-18.
+/*
+  Created by Tarek on 23-Jun-18.
  */
 
 import android.text.TextUtils;
-import android.util.JsonReader;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -66,7 +65,9 @@ import java.util.List;
  */
 public class QueryUtils {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
@@ -74,13 +75,13 @@ public class QueryUtils {
      * This class is only meant to hold static variables and methods, which can be accessed
      * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
      */
-    private QueryUtils(){
+    private QueryUtils() {
     }
 
     /**
      * Query the Guardian dataset and return a list of {@link Article} objects.
      */
-    public static List<Article> fetchArticleData(String requestUrl){
+    public static List<Article> fetchArticleData(String requestUrl) {
 
         try {
             Thread.sleep(2000);
@@ -111,8 +112,8 @@ public class QueryUtils {
     /**
      * Returns new URL object from the given string URL.
      */
-    private static URL createUrl(String StringUrl){
-    URL url = null;
+    private static URL createUrl(String StringUrl) {
+        URL url = null;
         try {
             url = new URL(StringUrl);
         } catch (MalformedURLException e) {
@@ -124,7 +125,7 @@ public class QueryUtils {
     /**
      * Make an HTTP request to the given URL and return a String as the response.
      */
-    private static String makeHttpRequest(URL url)throws IOException {
+    private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
 
         // If the URL is null, then return early.
@@ -146,17 +147,17 @@ public class QueryUtils {
             // then read the input stream and parse the response.
             //better to use HttpURLConnection.HTTP_OK instead of 200 as magic numbers are not recommended
             //if(urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK)
-            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem retrieving the article JSON results.", e);
         } finally {
-            if (urlConnection != null){
+            if (urlConnection != null) {
                 urlConnection.disconnect();
             }
-            if(inputStream != null){
+            if (inputStream != null) {
                 // function must handle java.io.IOException here
                 // Closing the input stream could throw an IOException, which is why
                 // the makeHttpRequest(URL url) method signature specifies that an IOException
@@ -171,13 +172,13 @@ public class QueryUtils {
      * Convert the {@link InputStream} into a String which contains the
      * whole JSON response from the server.
      */
-    private static String readFromStream (InputStream inputStream) throws IOException {
+    private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
-        if(inputStream != null){
+        if (inputStream != null) {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line = reader.readLine();
-            while (line != null){
+            while (line != null) {
                 output.append(line);
                 line = reader.readLine();
             }
@@ -189,9 +190,9 @@ public class QueryUtils {
      * Return a list of {@link Article} objects that has been built up from
      * parsing the given JSON response.
      */
-    private static List<Article> extractDetailsFromJson(String articleJson){
+    private static List<Article> extractDetailsFromJson(String articleJson) {
         //if the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(articleJson)){
+        if (TextUtils.isEmpty(articleJson)) {
             return null;
         }
 
@@ -204,13 +205,14 @@ public class QueryUtils {
         try {
             // Create a JSONObject from the JSON response string
             JSONObject baseJsonResponse = new JSONObject(articleJson);
+            JSONObject responseObject = baseJsonResponse.getJSONObject("response");
 
             // Extract the JSONArray associated with the key called "results",
             // which represents a list of results (or articles).
-            JSONArray articleArray = baseJsonResponse.getJSONArray("results");
+            JSONArray articleArray = responseObject.getJSONArray("results");
 
             // For each article in the articleArray, create an {@link Article} object
-            for(int i = 0 ; i < articleArray.length() ; i++ ) {
+            for (int i = 0; i < articleArray.length(); i++) {
 
                 // Get a single article at position i within the list of articles
                 JSONObject currentArticle = articleArray.getJSONObject(i);
@@ -220,19 +222,20 @@ public class QueryUtils {
                 String date = currentArticle.getString("webPublicationDate");
                 String webUrl = currentArticle.getString("webUrl");
                 JSONArray tagArray = currentArticle.getJSONArray("tags");
-                if (tagArray.length() >= 1) {
-                    for (int j = 0; j < tagArray.length(); j++) {
 
-                        JSONObject tagsObject = tagArray.getJSONObject(j);
-                        String author = tagsObject.getString("webTitle");
+                String author;
+                if (tagArray.length() > 0) {
+                    JSONObject tagsObject = tagArray.getJSONObject(0);
+                    author = tagsObject.getString("webTitle");
+                } else
+                    author = "Not Available";
 
-                        Article article = new Article(title, section, author, date, webUrl);
 
-                        articles.add(article);
-                    }
-                }
+                Article article = new Article(title, section, author, date, webUrl);
+
+                articles.add(article);
+
             }
-
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,

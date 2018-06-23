@@ -38,6 +38,8 @@
 
 package com.example.android.cryptocurrencynews;
 
+import android.app.LoaderManager;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -46,35 +48,34 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleActivity extends AppCompatActivity implements LoaderCallbacks<List<Article>> {
 
-    /** TextView that is displayed when the list is empty */
-    private TextView mEmptyStateTextView;
-
     /**
      * Constant value for the Article loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */
-    private static final int Article_LOADER_ID = 1 ;
-
-    /** URL for Article data from the Guardian Dataset */
+    private static final int Article_LOADER_ID = 1;
+    /**
+     * URL for Article data from the Guardian Dataset
+     */
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?q=cryptocurrency&format=json&from-date=2010-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author&api-key=8a80b725-35c4-4baf-a982-33e81bb5acb6";
-
     private static final String LOG_TAG = ArticleActivity.class.getSimpleName();
-
-    /** Adapter for the list of articles */
+    /**
+     * TextView that is displayed when the list is empty
+     */
+    private TextView mEmptyStateTextView;
+    /**
+     * Adapter for the list of articles
+     */
     private ArticleAdapter mAdapter;
 
     @Override
@@ -86,7 +87,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
         setContentView(R.layout.activity_article);
 
         // Find a reference to the {@link ListView} in the layout
-        ListView articleListView = (ListView)findViewById(R.id.list);
+        ListView articleListView = (ListView) findViewById(R.id.list);
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         articleListView.setEmptyView(mEmptyStateTextView);
@@ -123,13 +124,13 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
         });
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager connMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Get details on the currently active default data network
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         // If there is a network connection, fetch data
-        if(networkInfo != null && networkInfo.isConnected()) {
+        if (networkInfo != null && networkInfo.isConnected()) {
             // Get a reference to the LoaderManager, in order to interact with loaders.
             LoaderManager loaderManager = getLoaderManager();
 
@@ -138,7 +139,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
             // because this activity implements the LoaderCallbacks interface).
             Log.i(LOG_TAG, "TEST: calling initLoader() ...");
             loaderManager.initLoader(Article_LOADER_ID, null, this);
-        }else {
+        } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
             View loadingIndicator = findViewById(R.id.loading_indicator);
@@ -162,7 +163,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
     public void onLoadFinished(Loader<List<Article>> loader, List<Article> articles) {
 
         // Hide loading indicator because the data has been loaded
-        View loadingIndicator =findViewById(R.id.loading_indicator);
+        View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
         // Set empty state text to display "No articles found."
@@ -174,7 +175,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
 
         // If there is a valid list of {@link Article}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
-        if(articles != null && !articles.isEmpty()){
+        if (articles != null && !articles.isEmpty()) {
             mAdapter.addAll(articles);
         }
 
