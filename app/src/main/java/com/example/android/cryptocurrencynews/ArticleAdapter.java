@@ -57,7 +57,6 @@ import java.util.Date;
  */
 public class ArticleAdapter extends ArrayAdapter<Article> {
 
-    private static final String TIME_SEPARATOR = "T";
 
     public ArticleAdapter(@NonNull Context context, @NonNull ArrayList<Article> articles) {
         super(context, 0, articles);
@@ -67,9 +66,23 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
+        ViewHolderItem viewHolder;
+
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.article_list_item, parent, false);
+
+            viewHolder = new ViewHolderItem();
+            viewHolder.articleTitleTextView = (TextView)convertView.findViewById(R.id.article_title);
+            viewHolder.articleSectionTextView = (TextView)convertView.findViewById(R.id.article_section);
+            viewHolder.articleAuthorTextView = (TextView)convertView.findViewById(R.id.article_author);
+            viewHolder.articleDateTextView = (TextView)convertView.findViewById(R.id.article_date);
+
+            convertView.setTag(viewHolder);
+
+        }else {
+            viewHolder = (ViewHolderItem)convertView.getTag();
         }
+
 
         // Find the earthquake at the given position in the list of articles
         Article currentArticle = getItem(position);
@@ -94,21 +107,23 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         // Convert the Date object into a String.
         String formattedDate = newDateFormat.format(date);
 
-        TextView articleTitleView = (TextView) convertView.findViewById(R.id.article_title);
-        articleTitleView.setText(articleTitle);
-
-        TextView articleSectionView = (TextView) convertView.findViewById(R.id.article_section);
-        articleSectionView.setText(articleSection);
-
-        TextView articleAuthorView = (TextView) convertView.findViewById(R.id.article_author);
-        articleAuthorView.setText(articleAuthor);
-
-        TextView articleDateView = (TextView) convertView.findViewById(R.id.article_date);
-
-        articleDateView.setText(formattedDate);
+        viewHolder.articleTitleTextView.setText(articleTitle);
+        viewHolder.articleSectionTextView.setText(articleSection);
+        viewHolder.articleAuthorTextView.setText(articleAuthor);
+        viewHolder.articleDateTextView.setText(formattedDate);
 
 
         return convertView;
+    }
+
+    // our ViewHolder.
+    // caches our TextView
+    static class ViewHolderItem {
+        TextView articleTitleTextView;
+        TextView articleSectionTextView;
+        TextView articleAuthorTextView;
+        TextView articleDateTextView;
+
     }
 
 }
