@@ -43,12 +43,16 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -67,7 +71,9 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
     /**
      * URL for Article data from the Guardian Dataset
      */
-    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?q=cryptocurrency&format=json&from-date=2010-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author&api-key=8a80b725-35c4-4baf-a982-33e81bb5acb6";
+//    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?api-key=8a80b725-35c4-4baf-a982-33e81bb5acb6&q=cryptocurrency&format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author";
+    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search";
+
     private static final String LOG_TAG = ArticleActivity.class.getSimpleName();
     /**
      * TextView that is displayed when the list is empty
@@ -153,10 +159,41 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
     }
 
     @Override
+    // onCreateLoader instantiates and returns a new Loader for the given ID
     public Loader<List<Article>> onCreateLoader(int id, Bundle bundle) {
         // Create a new loader for the given URL
         Log.i(LOG_TAG, "TEST: onCreateLoader() called ...");
-        return new ArticleLoader(this, GUARDIAN_REQUEST_URL);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // getString retrieves a String value from the preferences. The second parameter is the default value for this preference.
+        String orderBy = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default));
+
+        String resultsLimit = sharedPrefs.getString(
+                getString(R.string.settings_results_limit_key),
+                getString(R.string.settings_results_limit_default));
+
+        // parse breaks apart the URI string that's passed into its parameter
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        // Append query parameter and its value. For example, the `format=json`
+        uriBuilder.appendQueryParameter("q", "cryptocurrency");
+        uriBuilder.appendQueryParameter("format", "json");
+        uriBuilder.appendQueryParameter("from-date", "2006-01-01");
+        uriBuilder.appendQueryParameter("page-size", resultsLimit);
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
+        uriBuilder.appendQueryParameter("show-fields", "starRating,headline,thumbnail,short-url");
+        uriBuilder.appendQueryParameter("order-by", orderBy);
+        uriBuilder.appendQueryParameter("show-references", "author");
+        uriBuilder.appendQueryParameter("api-key", "8a80b725-35c4-4baf-a982-33e81bb5acb6");
+
+        // Return the completed uri `https://content.guardianapis.com/search?api-key=8a80b725-35c4-4baf-a982-33e81bb5acb6&q=cryptocurrency&format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author
+        return new ArticleLoader(this, uriBuilder.toString());
     }
 
     @Override
@@ -187,5 +224,24 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
         Log.i(LOG_TAG, "TEST: onLoaderReset() is called ...");
         mAdapter.clear();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Intent settingIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingIntent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

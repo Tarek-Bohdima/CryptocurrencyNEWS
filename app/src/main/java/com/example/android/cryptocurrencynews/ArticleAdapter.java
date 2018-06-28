@@ -72,15 +72,15 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.article_list_item, parent, false);
 
             viewHolder = new ViewHolderItem();
-            viewHolder.articleTitleTextView = (TextView)convertView.findViewById(R.id.article_title);
-            viewHolder.articleSectionTextView = (TextView)convertView.findViewById(R.id.article_section);
-            viewHolder.articleAuthorTextView = (TextView)convertView.findViewById(R.id.article_author);
-            viewHolder.articleDateTextView = (TextView)convertView.findViewById(R.id.article_date);
+            viewHolder.articleTitleTextView = (TextView) convertView.findViewById(R.id.article_title);
+            viewHolder.articleSectionTextView = (TextView) convertView.findViewById(R.id.article_section);
+            viewHolder.articleAuthorTextView = (TextView) convertView.findViewById(R.id.article_author);
+            viewHolder.articleDateTextView = (TextView) convertView.findViewById(R.id.article_date);
 
             convertView.setTag(viewHolder);
 
-        }else {
-            viewHolder = (ViewHolderItem)convertView.getTag();
+        } else {
+            viewHolder = (ViewHolderItem) convertView.getTag();
         }
 
 
