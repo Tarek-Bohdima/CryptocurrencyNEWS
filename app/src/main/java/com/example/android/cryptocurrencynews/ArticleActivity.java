@@ -196,7 +196,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
         uriBuilder.appendQueryParameter("show-references", "author");
         uriBuilder.appendQueryParameter("api-key", MY_Guardian_API_KEY);
 
-        // Return the completed uri `https://content.guardianapis.com/search?api-key=8a80b725-35c4-4baf-a982-33e81bb5acb6&q=cryptocurrency&format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author
+        // Return the completed uri `https://content.guardianapis.com/search?api-key=********&q=cryptocurrency&format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author
         return new ArticleLoader(this, uriBuilder.toString());
     }
 
