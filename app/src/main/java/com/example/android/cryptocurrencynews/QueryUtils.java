@@ -84,7 +84,7 @@ public class QueryUtils {
     public static List<Article> fetchArticleData(String requestUrl) {
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

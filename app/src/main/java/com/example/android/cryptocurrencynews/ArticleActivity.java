@@ -71,10 +71,14 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
     /**
      * URL for Article data from the Guardian Dataset
      */
-//    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search?api-key=8a80b725-35c4-4baf-a982-33e81bb5acb6&q=cryptocurrency&format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author";
+
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/search";
 
     private static final String LOG_TAG = ArticleActivity.class.getSimpleName();
+
+    /** Making API key secure read this: https://technobells.com/best-way-to-store-your-api-keys-for-your-android-studio-project-e4b5e8bb7d23 */
+    private static final String MY_Guardian_API_KEY = BuildConfig.MY_GUARDIAN_API_KEY;
+
     /**
      * TextView that is displayed when the list is empty
      */
@@ -190,7 +194,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
         uriBuilder.appendQueryParameter("show-fields", "starRating,headline,thumbnail,short-url");
         uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("show-references", "author");
-        uriBuilder.appendQueryParameter("api-key", "8a80b725-35c4-4baf-a982-33e81bb5acb6");
+        uriBuilder.appendQueryParameter("api-key", MY_Guardian_API_KEY);
 
         // Return the completed uri `https://content.guardianapis.com/search?api-key=8a80b725-35c4-4baf-a982-33e81bb5acb6&q=cryptocurrency&format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author
         return new ArticleLoader(this, uriBuilder.toString());
