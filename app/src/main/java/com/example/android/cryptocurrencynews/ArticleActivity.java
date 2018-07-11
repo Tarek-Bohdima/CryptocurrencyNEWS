@@ -39,7 +39,6 @@
 package com.example.android.cryptocurrencynews;
 
 import android.app.LoaderManager;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -61,7 +60,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleActivity extends AppCompatActivity implements LoaderCallbacks<List<Article>> {
+public class ArticleActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Article>>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * Constant value for the Article loader ID. We can choose any integer.
@@ -194,6 +193,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
         uriBuilder.appendQueryParameter("show-fields", "starRating,headline,thumbnail,short-url");
         uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("show-references", "author");
+        uriBuilder.appendQueryParameter("tag", "crypto");
         uriBuilder.appendQueryParameter("api-key", MY_Guardian_API_KEY);
 
         // Return the completed uri `https://content.guardianapis.com/search?api-key=********&q=cryptocurrency&format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author
@@ -218,6 +218,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
         // data set. This will trigger the ListView to update.
         if (articles != null && !articles.isEmpty()) {
             mAdapter.addAll(articles);
+            mAdapter.notifyDataSetChanged();
         }
 
     }
@@ -247,5 +248,16 @@ public class ArticleActivity extends AppCompatActivity implements LoaderCallback
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        getLoaderManager().restartLoader(Article_LOADER_ID, null, this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 }

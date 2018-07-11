@@ -38,6 +38,7 @@
 
 package com.example.android.cryptocurrencynews;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -92,5 +93,12 @@ public class SettingsActivity extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, ArticleActivity.class);
+        startActivity(intent);
     }
 }

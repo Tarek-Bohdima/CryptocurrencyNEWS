@@ -112,10 +112,10 @@ public class QueryUtils {
     /**
      * Returns new URL object from the given string URL.
      */
-    private static URL createUrl(String StringUrl) {
+    private static URL createUrl(String stringUrl) {
         URL url = null;
         try {
-            url = new URL(StringUrl);
+            url = new URL(stringUrl);
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Problem building the URL ", e);
         }
