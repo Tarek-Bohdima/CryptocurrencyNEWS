@@ -39,16 +39,16 @@
 package com.example.android.cryptocurrencynews;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -84,7 +84,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         }
 
 
-        // Find the earthquake at the given position in the list of articles
+        // Find the article at the given position in the list of articles
         Article currentArticle = getItem(position);
 
         String articleTitle = currentArticle.getmTitle();
@@ -92,18 +92,20 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         String articleAuthor = currentArticle.getmAuthor();
 
         // Define a SimpleDateFormat object to deconstruct original date.
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         Date date = null;
 
         try {
             // Convert the date String into a Date object using the SimpleDateFormat.
-            date = simpleDateFormat.parse(currentArticle.getmDate());
+            date = dateFormat.parse(currentArticle.getmDate());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         // Define a new SimpleDateFormat object to reconstruct the date into the desired format.
-        SimpleDateFormat newDateFormat = new SimpleDateFormat("LLL dd, yyyy");
+//        SimpleDateFormat newDateFormat = new SimpleDateFormat("LLL dd, yyyy");
+        DateFormat newDateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
         // Convert the Date object into a String.
         String formattedDate = newDateFormat.format(date);
 

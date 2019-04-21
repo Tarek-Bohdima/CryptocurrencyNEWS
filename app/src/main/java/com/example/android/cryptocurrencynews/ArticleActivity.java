@@ -48,7 +48,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -76,8 +76,8 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     private static final String LOG_TAG = ArticleActivity.class.getSimpleName();
 
     /** Making API key secure read this: https://technobells.com/best-way-to-store-your-api-keys-for-your-android-studio-project-e4b5e8bb7d23 */
-    private static final String MY_Guardian_API_KEY = BuildConfig.MY_GUARDIAN_API_KEY;
-
+//    private static final String MY_Guardian_API_KEY = BuildConfig.MY_GUARDIAN_API_KEY;
+    private static final String MY_Guardian_API_KEY ="8a80b725-35c4-4baf-a982-33e81bb5acb6";
     /**
      * TextView that is displayed when the list is empty
      */
@@ -252,7 +252,21 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        getLoaderManager().restartLoader(Article_LOADER_ID, null, this);
+        if (key.equals(getString(R.string.settings_order_by_key)) ||
+        key.equals(getString(R.string.settings_results_limit_key))) {
+            // Clear the ListView as a new query will be kicked off
+            mAdapter.clear();
+
+            // Hide the empty state text view as the loading indicator will be displayed
+            mEmptyStateTextView.setVisibility(View.GONE);
+
+            // Show the loading indicator while new data is being fetched
+            View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.VISIBLE);
+
+            // Restart the loader to requery the The Guardian as the query settings have been updated
+            getLoaderManager().restartLoader(Article_LOADER_ID, null, this);
+        }
     }
 
     @Override

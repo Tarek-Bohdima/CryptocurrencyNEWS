@@ -63,7 +63,7 @@ import java.util.List;
 /**
  * Helper methods related to requesting and receiving Article data from Guardian API dataset.
  */
-public class QueryUtils {
+public  final class QueryUtils {
 
     /**
      * Tag for the log messages
