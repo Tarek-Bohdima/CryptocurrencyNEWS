@@ -76,8 +76,8 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
     private static final String LOG_TAG = ArticleActivity.class.getSimpleName();
 
     /** Making API key secure read this: https://technobells.com/best-way-to-store-your-api-keys-for-your-android-studio-project-e4b5e8bb7d23 */
-//    private static final String MY_Guardian_API_KEY = BuildConfig.MY_GUARDIAN_API_KEY;
-    private static final String MY_Guardian_API_KEY ="8a80b725-35c4-4baf-a982-33e81bb5acb6";
+    private static final String MY_Guardian_API_KEY = BuildConfig.MY_GUARDIAN_API_KEY;
+    
     /**
      * TextView that is displayed when the list is empty
      */
