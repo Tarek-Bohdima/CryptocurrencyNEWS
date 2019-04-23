@@ -77,7 +77,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
     /** Making API key secure read this: https://technobells.com/best-way-to-store-your-api-keys-for-your-android-studio-project-e4b5e8bb7d23 */
     private static final String MY_Guardian_API_KEY = BuildConfig.MY_GUARDIAN_API_KEY;
-    
+
     /**
      * TextView that is displayed when the list is empty
      */
@@ -185,6 +185,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         // Append query parameter and its value. For example, the `format=json`
+        uriBuilder.appendQueryParameter("api-key", MY_Guardian_API_KEY);
         uriBuilder.appendQueryParameter("q", "cryptocurrency");
         uriBuilder.appendQueryParameter("format", "json");
         uriBuilder.appendQueryParameter("from-date", "2006-01-01");
@@ -193,8 +194,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         uriBuilder.appendQueryParameter("show-fields", "starRating,headline,thumbnail,short-url");
         uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("show-references", "author");
-        uriBuilder.appendQueryParameter("tag", "crypto");
-        uriBuilder.appendQueryParameter("api-key", MY_Guardian_API_KEY);
+//        uriBuilder.appendQueryParameter("tag", "crypto");
 
         // Return the completed uri `https://content.guardianapis.com/search?api-key=********&q=cryptocurrency&format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author
         return new ArticleLoader(this, uriBuilder.toString());
