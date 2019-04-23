@@ -116,9 +116,9 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
 //
 //            // Define a new SimpleDateFormat object to reconstruct the date into the desired format.
 ////            SimpleDateFormat newDateFormat = new SimpleDateFormat("LLL dd, yyyy", Locale.getDefault());
-//            DateFormat newDateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-//            // Convert the Date object into a String.
-            String formattedDate = df.format(myDate);
+            DateFormat newDateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+            // Convert the Date object into a String.
+            String formattedDate = newDateFormat.format(myDate);
 
             viewHolder.articleTitleTextView.setText(articleTitle);
             viewHolder.articleSectionTextView.setText(articleSection);
