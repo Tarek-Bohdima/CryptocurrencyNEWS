@@ -186,7 +186,7 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
 
         // Append query parameter and its value. For example, the `format=json`
         uriBuilder.appendQueryParameter("api-key", MY_Guardian_API_KEY);
-        uriBuilder.appendQueryParameter("q", "cryptocurrency");
+        uriBuilder.appendQueryParameter("q", "Cryptocurrency AND Blockchain");
         uriBuilder.appendQueryParameter("format", "json");
         uriBuilder.appendQueryParameter("from-date", "2006-01-01");
         uriBuilder.appendQueryParameter("page-size", resultsLimit);
@@ -194,9 +194,11 @@ public class ArticleActivity extends AppCompatActivity implements LoaderManager.
         uriBuilder.appendQueryParameter("show-fields", "starRating,headline,thumbnail,short-url");
         uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("show-references", "author");
-//        uriBuilder.appendQueryParameter("tag", "crypto");
+//        uriBuilder.appendQueryParameter("tag", "cryptocurrencies, e-commerce, blockchain");
 
-        // Return the completed uri `https://content.guardianapis.com/search?api-key=********&q=cryptocurrency&format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url&order-by=relevance&show-references=author
+        // Return the completed uri `https://content.guardianapis.com/search?api-key=********&q=cryptocurrency
+        // &format=json&from-date=2006-01-01&show-tags=contributor&show-fields=starRating,headline,thumbnail,short-url
+        // &order-by=relevance&show-references=author
         return new ArticleLoader(this, uriBuilder.toString());
     }
 
